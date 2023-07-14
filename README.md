@@ -11,3 +11,7 @@ Use the aruco.estimatePoseSingleMarkers() function to return the rvec rotation m
 项目地址：https://github.com/ZengWenJian123/aruco_positioning_2D
 博客地址：https://blog.dgut.top/2020/08/19/aruco-2d/
 csdn：https://blog.csdn.net/dgut_guangdian/article/details/108093643
+
+## requment
+opencv-contrib-python 4.6.0.66
+opencv-python         4.8.0.74
