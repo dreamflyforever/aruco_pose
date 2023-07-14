@@ -6,7 +6,7 @@ import math
 #加载鱼眼镜头的yaml标定文件，检测aruco并且估算与标签之间的距离,获取偏航，俯仰，滚动
 
 #加载相机纠正参数
-cv_file = cv2.FileStorage("yuyan.yaml", cv2.FILE_STORAGE_READ)
+cv_file = cv2.FileStorage("rgbd.yaml", cv2.FILE_STORAGE_READ)
 camera_matrix = cv_file.getNode("camera_matrix").mat()
 dist_matrix = cv_file.getNode("dist_coeff").mat()
 cv_file.release()
@@ -23,7 +23,7 @@ cv_file.release()
 
 
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(4)
 # cap.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc('M', 'J', 'P', 'G'))
 # cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
 # cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
@@ -64,7 +64,7 @@ while True:
 
         #在画面上 标注auruco标签的各轴
         for i in range(rvec.shape[0]):
-            aruco.drawAxis(frame, camera_matrix, dist_matrix, rvec[i, :, :], tvec[i, :, :], 0.03)
+            cv2.drawFrameAxes(frame, camera_matrix, dist_matrix, rvec[i, :, :], tvec[i, :, :], 0.03)
             aruco.drawDetectedMarkers(frame, corners,ids)
 
 
@@ -98,8 +98,7 @@ while True:
 
         cv2.putText(frame,'deg_z:'+str(ry)+str('deg'),(0, 140), font, 1, (0, 255, 0), 2,
                     cv2.LINE_AA)
-        #print("偏航，俯仰，滚动",rx,ry,rz)
-
+        print("rx, ry, rz", rx,ry,rz)
 
         ###### 距离估计 #####
         distance = ((tvec[0][0][2] + 0.02) * 0.0254) * 100  # 单位是米
